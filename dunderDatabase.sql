@@ -63,5 +63,46 @@ CREATE TABLE Orders (
 
 CREATE TABLE Supplies(
     SupplyId int PRIMARY KEY,
-    Name varchar(255)
-)
+    Name varchar(255),
+    InStock BIT,
+    Price int,
+    Picture varbinary(MAX)  
+);
+
+CREATE TABLE StikyQuips(
+    SupplyId int PRIMARY KEY,
+    Name VARCHAR(255),
+    Color VARCHAR(255),
+    Size VARCHAR(2)
+);
+
+CREATE TABLE OfficeSupplies(
+    SupplyId int PRIMARY KEY,
+    Type VARCHAR(255),
+    Brand VARCHAR(255),
+    Color VARCHAR(255),
+    Size VARCHAR(255)
+);
+
+CREATE TABLE Printers(
+    SupplyId int PRIMARY KEY,
+    Size VARCHAR(255),
+    TonerType VARCHAR(255),
+    Brand VARCHAR(255)
+);
+
+CREATE TABLE PrintToner(
+    SupplyId int PRIMARY KEY,
+    Type VARCHAR(255),
+    Size VARCHAR(255),
+    Brand VARCHAR(255),
+    Color VARCHAR(255)
+);
+
+CREATE TABLE Paper(
+    SupplyId int PRIMARY KEY,
+    Color VARCHAR(255),
+    Size VARCHAR(255),
+    Weight int
+);
+
