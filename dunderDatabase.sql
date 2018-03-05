@@ -1,14 +1,15 @@
 CREATE TABLE Users (
-    Username varchar(255) PRIMARY KEY,
+    Username varchar(255) PRIMARY KEY NOT NULL,
     Name varchar(255) NOT NULL,
     Password BINARY(64),
-    Email varchar(255)
+    Email varchar(255),
+    loggedIn BIT
 );
 
 CREATE TABLE Customers (
     Username varchar(255) PRIMARY KEY,
     CompanyId int,
-    CustomerId int
+    CustomerId int UNIQUE
 );
 
 CREATE TABLE Employee (
@@ -17,13 +18,13 @@ CREATE TABLE Employee (
 );
 
 CREATE TABLE Company (
-    CompanyId int PRIMARY KEY,
+    CompanyId int PRIMARY KEY AUTO_INCREMENT,
     MailingAddress varchar(255),
     Name varchar(255)
 );
 
 CREATE TABLE PaymentOption (
-    AccountId int PRIMARY KEY,
+    AccountId int PRIMARY KEY AUTO_INCREMENT,
     CompanyId int
 );
 
@@ -43,30 +44,30 @@ CREATE TABLE Bank (
 );
 
 CREATE TABLE Reviews(
-    ReviewId int PRIMARY KEY,
+    ReviewId int PRIMARY KEY AUTO_INCREMENT,
     Date TIMESTAMP,
     Rating int,
-    Text VARCHAR(MAX),
+    Text Text,
     CustomerId int,
     SupplyId int
 );
 
 CREATE TABLE Orders (
-    OrderId int PRIMARY KEY,
+    OrderId int PRIMARY KEY AUTO_INCREMENT,
     CompanyId int,
     AccountId int,
     Date TIMESTAMP,
     SupplyId int,
     CustomerId int,
-    Shipped BIT,
+    Shipped BIT
 );
 
 CREATE TABLE Supplies(
-    SupplyId int PRIMARY KEY,
+    SupplyId int PRIMARY KEY AUTO_INCREMENT,
     Name varchar(255),
     InStock BIT,
     Price int,
-    Picture varbinary(MAX)  
+    Picture VARCHAR(255) 
 );
 
 CREATE TABLE StikyQuips(
