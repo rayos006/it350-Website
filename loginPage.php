@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-	if($_SESSION["logged_in"] === "no"){
+	if($_SESSION["loggedIn"] === "no"){
 		echo '<script type="text/javascript">alert("Login Failed!"); </script>';
 		session_destroy();
 	}
@@ -14,16 +14,16 @@ require("nav.php");
 	</head>
 	<body>
 		<div class="ui raised container segment" style="width=80%">
-			<form class="ui form">
+			<form class="ui form" action="./admin/login.php" method="Post">
 				<div class="field">
 					<label>Username</label>
-					<input type="text" name="userName" placeholder="Username">
+					<input type="text" name="UserName" placeholder="Username">
 				</div>
 				<div class="field">
 					<label>Password</label>
-					<input type="password" name="password" placeholder="Password">
+					<input type="password" name="Password" placeholder="Password">
 				</div>
-				<button class="ui button" type="submit"action="./admin/login.php">Submit</button>
+				<button class="ui button" type="submit">Submit</button>
 			</form>
 		</div>
 	</body>

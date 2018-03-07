@@ -3,25 +3,29 @@ session_start();
 			require('settings.php');
 			$previous_location = $_SESSION['previous_location'];
 			if ($db_found){
-				$username = $_POST['username'];
-				$password = hash('sha1',$_POST['password']);
+				$username = $_POST['UserName'];
+				$password = hash('sha1',$_POST['Password']);
 
 
-				$query = "SELECT * FROM $table WHERE username= '$username'and password= '$password'" or die("Failed to find username");
+				$query = "SELECT * FROM $users WHERE Username = '$username' and Password = '$password'" or die("Failed to find username");
 				$result = mysqli_query($db_handle, $query);
 				if ($result->num_rows == 1) {
-				while($row = $result->fetch_assoc()) {
-					$_SESSION['userid'] = $row['userid'];
-				}
-				$sql = "UPDATE $table SET logged_in='1' WHERE username='$username'" or die();
-				$result = mysqli_query($db_handle, $sql);
+					$sql = "UPDATE $users SET loggedIn='1' WHERE Username='$username'" or die();
+					$result = mysqli_query($db_handle, $sql);
+					$query2 = "SELECT * FROM $employee WHERE Username = '$username'" or die("Failed to find username");
+					$result = mysqli_query($db_handle, $query2);
+					$obj = $result->fetch_object();
+						if ($result->num_rows == 1 && $obj->Admin == 1) {
+							$_SESSION['admin'] = 1;
+						}
 					$_SESSION['username'] = $username;
-					$_SESSION['logged_in'] = "yes";
-						header("Location:$previous_location");
+					$_SESSION['loggedIn'] = "yes";
+					print $previous_location;
+					header("Location:../home.php");
 				}
 				else {
-					$_SESSION["logged_in"] = "no";
-					header("location:loginPage.php");
+					$_SESSION["loggedIn"] = "no";
+					header("location:../loginPage.php");
  }
 
 

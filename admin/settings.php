@@ -5,6 +5,7 @@
 $database = "tylerdra_dunder";
 $users = "Users";
 $employee = "Employee";
+$customer = "Customers";
 $bank = "Bank";
 $card = "Card";
 $company = "Company";

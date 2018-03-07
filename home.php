@@ -14,8 +14,7 @@ require("nav.php");
 	
 	<body>
 	<?php
-	echo $_SESSION['username'];	
-	echo $_SESSION['userid'];
+
 	?>
 	<img src="./img/dunder.jpg" width ="100%" height ="100%">
 	</body>

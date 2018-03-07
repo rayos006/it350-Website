@@ -1,7 +1,7 @@
 CREATE TABLE Users (
     Username varchar(255) PRIMARY KEY NOT NULL,
     Name varchar(255) NOT NULL,
-    Password BINARY(64),
+    Password varchar(255),
     Email varchar(255),
     loggedIn BIT
 );
@@ -14,7 +14,8 @@ CREATE TABLE Customers (
 
 CREATE TABLE Employee (
     Username varchar(255) PRIMARY KEY,
-    BranchId int
+    BranchId int,
+    Admin BIT 
 );
 
 CREATE TABLE Company (
