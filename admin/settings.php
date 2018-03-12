@@ -1,6 +1,3 @@
-<html>
-<body>
-
 <?php
 $database = "tylerdra_dunder";
 $users = "Users";
@@ -11,6 +8,7 @@ $card = "Card";
 $company = "Company";
 $officeSupplies = "OfficeSupplies";
 $orders = "Orders";
+$lookupOS = "OrderSupplyLookup";
 $paper = "Paper";
 $paymentOption = "PaymentOption";
 $printers = "Printers";
@@ -27,6 +25,3 @@ $db_found = mysqli_select_db($db_handle, $database);
 //As a challenge you can try and have it check if the records were actually added
 //and if not, have it send an error message instead of the "One record added" message
 ?> 
-
-</body>
-</html>

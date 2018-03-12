@@ -3,7 +3,7 @@ CREATE TABLE Users (
     Name varchar(255) NOT NULL,
     Password varchar(255),
     Email varchar(255),
-    loggedIn BIT
+    loggedIn int
 );
 
 CREATE TABLE Customers (
@@ -15,22 +15,23 @@ CREATE TABLE Customers (
 CREATE TABLE Employee (
     Username varchar(255) PRIMARY KEY,
     BranchId int,
-    Admin BIT 
+    Admin int 
 );
 
 CREATE TABLE Company (
-    CompanyId int PRIMARY KEY AUTO_INCREMENT,
+    CompanyId int PRIMARY KEY,
     MailingAddress varchar(255),
     Name varchar(255)
 );
 
 CREATE TABLE PaymentOption (
-    AccountId int PRIMARY KEY AUTO_INCREMENT,
-    CompanyId int
+    AccountId int PRIMARY KEY,
+    CompanyId int UNIQUE
 );
 
 CREATE TABLE Card (
-    AccountId int PRIMARY KEY,
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    AccountId int,
     CardNumber int,
     CVV int,
     BillingAddress VARCHAR(255),
@@ -38,14 +39,15 @@ CREATE TABLE Card (
 );
 
 CREATE TABLE Bank (
-    AccountId int PRIMARY KEY,
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    AccountId int,
     AccountNumber int,
     RoutingNumber int,
     TypeOfAccount VARCHAR(255)
 );
 
 CREATE TABLE Reviews(
-    ReviewId int PRIMARY KEY AUTO_INCREMENT,
+    ReviewId int PRIMARY KEY,
     Date TIMESTAMP,
     Rating int,
     Text Text,
@@ -54,26 +56,30 @@ CREATE TABLE Reviews(
 );
 
 CREATE TABLE Orders (
-    OrderId int PRIMARY KEY AUTO_INCREMENT,
+    OrderId int PRIMARY KEY,
     CompanyId int,
     AccountId int,
     Date TIMESTAMP,
-    SupplyId int,
     CustomerId int,
-    Shipped BIT
+    Shipped int
+);
+
+CREATE TABLE OrderSupplyLookup (
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    SupplyId int,
+    OrderId int
 );
 
 CREATE TABLE Supplies(
-    SupplyId int PRIMARY KEY AUTO_INCREMENT,
+    SupplyId int PRIMARY KEY,
     Name varchar(255),
-    InStock BIT,
+    InStock int,
     Price int,
     Picture VARCHAR(255) 
 );
 
-CREATE TABLE StikyQuips(
+CREATE TABLE StickyQuips(
     SupplyId int PRIMARY KEY,
-    Name VARCHAR(255),
     Color VARCHAR(255),
     Size VARCHAR(2)
 );

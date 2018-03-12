@@ -35,8 +35,11 @@ require("nav.php");
 				<div class="field" style="display:none">
 					<input name="type" value="Customer">
 				</div>
+				<div class="field" style="display:none">
+                        <input name="Redirect" value="Redirect">
+                    </div>
 				<div class="ui error message"></div>
-				<button class="ui button">Submit</button>
+				<button class="ui button" type="submit">Submit</button>
 			</form>
 		</div>
 		<div class="ui raised container segment">
@@ -65,6 +68,12 @@ require("nav.php");
 				<div class="field" style="display:none">
 					<input name="type" value="Employee">
 				</div>
+				<div class="field" style="display:none">
+                    <input name="Redirect" value="Redirect">
+                </div>
+				<div class="field" style="display:none">
+                    <input name="Admin" value="0">
+                </div>
 				<div class="ui error message"></div>
 				<button class="ui button" type="submit">Submit</button>
 			</form>
