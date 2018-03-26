@@ -2,8 +2,15 @@
 session_start();
 			require('settings.php');
 			if ($db_found){
+                // ******************************************** USER SECTION ******************************************** 
+                if($_GET['action'] == 'getUsers'){
+                    $query = "SELECT Username, Name FROM $users" or die("Failed to find username");
+                    $result = mysqli_fetch_all(mysqli_query($db_handle, $query), MYSQLI_ASSOC);
+                    $myJSON = json_encode($result);
+                    echo $myJSON;
+                }
                 // ******************************************** CUSTOMER SECTION ******************************************** 
-                if($_GET['action'] == 'getCustomers'){
+                elseif($_GET['action'] == 'getCustomers'){
                     $query = "SELECT a.Username, a.Name, a.Email, b.CompanyId, b.CustomerId FROM $users AS a, $customer AS b WHERE a.Username = b.Username" or die("Failed to find username");
                     $result = mysqli_fetch_all(mysqli_query($db_handle, $query), MYSQLI_ASSOC);
                     $myJSON = json_encode($result);
@@ -376,6 +383,14 @@ session_start();
                         $myJSON = json_encode($obj);
                         echo $myJSON;
                     }
+                }
+                elseif($_GET['action'] == 'getSupply') {
+                    $supplyId = $_GET['supplyId'];
+                    $query = "SELECT * FROM $supplies WHERE SupplyId = '$supplyId'" or die("Failed to find username");
+                    $result = mysqli_query($db_handle, $query);
+                    $obj = $result->fetch_object();
+                    $myJSON = json_encode($obj);
+                    echo $myJSON;
                 }
                 //  ******************************************** REVIEW SECTION ******************************************** 
                 elseif($_GET['action'] == 'getReviews'){

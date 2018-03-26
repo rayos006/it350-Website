@@ -17,6 +17,13 @@ session_start();
 					$obj = $result->fetch_object();
 						if ($result->num_rows == 1 && $obj->Admin == 1) {
 							$_SESSION['admin'] = 1;
+							$_SESSION['employeeId'] = $obj->EmployeeId;
+						}
+					$query3 = "SELECT * FROM $customer WHERE Username = '$username'" or die("Failed to find username");
+					$result = mysqli_query($db_handle, $query3);
+					$obj = $result->fetch_object();
+						if ($result->num_rows == 1) {
+							$_SESSION['customerId'] = $obj->CustomerId;
 						}
 					$_SESSION['username'] = $username;
 					$_SESSION['loggedIn'] = "yes";
