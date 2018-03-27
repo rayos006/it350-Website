@@ -121,7 +121,6 @@
                     <i class="redo icon"></i>
                 </button>
               </div>
-                <
             </div>
             <div class="actions">
                 <button class="ui positive right labeled icon button">
