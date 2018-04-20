@@ -59,7 +59,7 @@ session_start();
 					else {
 						$query2 ="INSERT INTO $users (`Name`, `Username`, `Password`, `Email`, `loggedIn` ) VALUES ('$name','$username','$password','$email','0')" or die("Failed to add user");
 						mysqli_query($db_handle, $query2);
-						$query3 = "INSERT INTO $employee (`Username`, `BranchId`,`Admin`) VALUES ('$username','$branchId',$admin)" or die("Failed to add user");
+						$query3 = "INSERT INTO $employee (`Username`, `BranchId`,`Admin`) VALUES ('$username','$branchId','$admin')" or die("Failed to add user");
 						mysqli_query($db_handle, $query3);
 						if($_POST['Redirect'] == 'Redirect'){
 							header("location:../loginPage.php");

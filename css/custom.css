@@ -1,3 +1,17 @@
 .hidden{
     display: None !important;
 }
+
+.time{
+    float: right;
+    color: grey;
+    margin-top: -8px;
+    font-size: .85em;
+}
+
+.deleteMessageButton {
+    float: right !important;
+    margin-top: -23px !important;
+    margin-right: -23px !important;
+    padding: 0.4em .4em .4em !important;
+}

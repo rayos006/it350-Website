@@ -40,7 +40,7 @@ require("nav.php");
                 <tfoot class="full-width">
                     <tr>
                     <th></th>
-                    <th colspan="5">
+                    <th colspan="6">
                         <button id="addCustomer" onclick="addCustomer()" class="ui right floated small primary labeled icon button">
                         <i class="user icon"></i> Add Customer
                         </button>
@@ -805,7 +805,7 @@ require("nav.php");
             </div>
         </div>
 
-        <div class="ui special supplyInfo modal">
+        <!-- <div class="ui special supplyInfo modal">
             <div class="header">
                 More Info:
             </div>
@@ -831,7 +831,7 @@ require("nav.php");
                     <i class="checkmark icon"></i>
                 </button>
             </div>
-        </div>
+        </div> -->
 
         <!-- ********************************************  REVIEWS SECTION  ******************************************** -->
         <div class="ui raised container segment">
