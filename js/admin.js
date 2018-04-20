@@ -488,6 +488,7 @@ function closeNewAccount(){
 // ******************************************** ORDER SECTION ***************************************************
 
 function getOrders() {
+    $('#OrdersTable').empty();
     $('#orderButton').addClass("disabled");
     $('#deleteAllOrders').removeClass("disabled");
     $('#deleteOrders').addClass("disabled");
@@ -584,7 +585,9 @@ function showOrder() {
 
 function addOrder() {
     var array = $('.order.form').serializeArray();
+    console.log(array)
     var supplyList = $('#supplySelect').val();
+    console.log(supplyList)
     $.ajax({
         type: "POST",
         url: "../admin/admin.php",
@@ -762,7 +765,7 @@ function showSupply() {
         })
         .modal('show')
         ;
-    $('select.dropdown')
+    $('.dropdown.supplyDrop')
         .dropdown({
             onChange: function (value, text, $selectedItem) {
                 if(value == 1){
@@ -987,5 +990,64 @@ function showReview(reviewId){
             $('#reviewText').html(data['Text'])
         }
     })
+}
+
+// ********************************************  DB ADMIN ******************************************** 
+
+
+function getMongoInfo(){
+    $.ajax({
+        type: "GET",
+        url: "http://192.168.50.43:5000/mongo/status",
+        error: function () {
+            alert("Failed to get Elements")
+        },
+        success: function (data) {
+            console.log(data)
+            $('#MongoUsage').html(data)
+        }
+    });
+}
+
+
+function getMySQLInfo(){
+    $.ajax({
+        type: "GET",
+        url: "../admin/admin.php",
+        data: { "action": "getNumberOfQueries"},
+        error: function () {
+            alert("Failed to get Elements")
+        },
+        success: function (data) {
+            console.log(JSON.parse(data))
+            $('#MySQLUsage').html(data)
+        }
+    })
+}
+
+function getElasticSearchInfo(){
+    $.ajax({
+        type: "GET",
+        url: "http://192.168.50.43:9200/_cluster/stats?human&pretty",
+        error: function () {
+            alert("Failed to get Elements")
+        },
+        success: function (data) {
+            console.log(JSON.parse(data))
+            $('#ElasticSearchUsage').html(data)
+        }
+    });
+}
+
+function elasticSearch1() {
+    
+}
+
+function elasticSearch2() {
+
+}
+
+function elasticSearch3() {
+
 }
 

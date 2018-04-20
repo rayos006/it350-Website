@@ -2,14 +2,29 @@
 session_start();
 			require('settings.php');
 			if ($db_found){
+                // ******************************************** DB ADMIN ********************************************
+                if($_GET['action'] == 'getNumberOfQueries'){
+                $query = "SHOW GLOBAL STATUS";
+                $result = mysqli_fetch_all(mysqli_query($db_handle, $query), MYSQLI_ASSOC);
+                    $myJSON = json_encode($result);
+                    echo $myJSON;
+                }
                 // ******************************************** USER SECTION ******************************************** 
-                if($_GET['action'] == 'getUsers'){
+                elseif($_GET['action'] == 'getUsers'){
                     $query = "SELECT Username, Name FROM $users" or die("Failed to find username");
                     $result = mysqli_fetch_all(mysqli_query($db_handle, $query), MYSQLI_ASSOC);
                     $myJSON = json_encode($result);
                     echo $myJSON;
                 }
                 // ******************************************** CUSTOMER SECTION ******************************************** 
+                elseif($_GET['action'] == 'getCustomer'){
+                    $username = $_GET['username'];
+                    $query = "SELECT CompanyId, CustomerId FROM $customer WHERE Username = '$username'" or die("Failed to find username");
+                    $result = mysqli_query($db_handle, $query);
+                    $obj = $result->fetch_object();
+                    $myJSON = json_encode($obj);
+                    echo $myJSON;
+                }
                 elseif($_GET['action'] == 'getCustomers'){
                     $query = "SELECT a.Username, a.Name, a.Email, b.CompanyId, b.CustomerId FROM $users AS a, $customer AS b WHERE a.Username = b.Username" or die("Failed to find username");
                     $result = mysqli_fetch_all(mysqli_query($db_handle, $query), MYSQLI_ASSOC);
@@ -55,6 +70,17 @@ session_start();
                     echo $result;
                 }
                 //  ******************************************** Company SECTION ******************************************** 
+                elseif($_GET['action'] == 'getCompanyAccounts'){
+                    $companyId = $_GET['companyId'];
+                    $query = "SELECT AccountId FROM $paymentOption WHERE CompanyId = '$companyId'";
+                    $result = mysqli_query($db_handle, $query);
+                    $obj = $result->fetch_object();
+                    $accountId = $obj->AccountId;
+                    $query2 = "SELECT b.AccountId, b.AccountNumber , c.CardNumber FROM $card AS c, $bank AS b WHERE b.AccountId = '$accountId' AND c.AccountId = '$accountId'" or die("Failed to find username");
+                    $result = mysqli_fetch_all(mysqli_query($db_handle, $query2), MYSQLI_ASSOC);
+                    $myJSON = json_encode($result);
+                    echo $myJSON;
+                }
                 elseif($_GET['action'] == 'getCompanies'){
                     $query = "SELECT * FROM $company WHERE 1" or die("Failed to find username");
                     $result = mysqli_fetch_all(mysqli_query($db_handle, $query), MYSQLI_ASSOC);
@@ -254,6 +280,60 @@ session_start();
                         }
                     }
                     echo json_encode(array($myJSON,$myJSON1,$myJSON2,$myJSON3,$myJSON4));
+                }
+
+                elseif($_GET['action'] == 'getCustomerOrders'){
+                    $username = $_GET['username'];
+                    $query = "SELECT CustomerId FROM $customer WHERE Username = '$username'" or die("Failed to find username");
+                    $result = mysqli_query($db_handle, $query);
+                    $obj = $result->fetch_object();                 
+                    $customerId = $obj->CustomerId;
+                    $query = "SELECT * FROM $orders WHERE CustomerId = '$customerId'" or die("Failed to find username");
+                    $result = mysqli_fetch_all(mysqli_query($db_handle, $query), MYSQLI_ASSOC);
+                    $array = array();
+                    $array2 = array();
+                    foreach ($result as $value) {
+                        $orderId = $value['OrderId'];
+                        array_push($array,json_encode($value));
+                        $query = "SELECT SupplyId FROM $lookupOS WHERE OrderId = '$orderId'" or die("Failed to find username");
+                        $result = mysqli_fetch_all(mysqli_query($db_handle, $query), MYSQLI_ASSOC);
+                        foreach ($result as $value) {
+                            foreach ($value as $supplyId) {
+                                $query = "SELECT * FROM $paper WHERE SupplyId = '$supplyId'" or die("Failed to find username");
+                                $result = mysqli_query($db_handle, $query);
+                                if ($result->num_rows >= 1) {
+                                    $obj = $result->fetch_object();                    
+                                    array_push($array,json_encode($obj));
+                                }
+                                $query3 = "SELECT * FROM $printToner WHERE SupplyId = '$supplyId'" or die("Failed to find username");
+                                $result3 = mysqli_query($db_handle, $query3);
+                                if ($result3->num_rows >= 1) {
+                                    $obj = $result3->fetch_object();                    
+                                    array_push($array,json_encode($obj));
+                                }
+                                $query4 = "SELECT * FROM $printers WHERE SupplyId = '$supplyId'" or die("Failed to find username");
+                                $result4 = mysqli_query($db_handle, $query4);
+                                if ($result4->num_rows >= 1) {
+                                    $obj = $result4->fetch_object();                    
+                                    array_push($array,json_encode($obj));
+                                }
+                                $query5 = "SELECT * FROM $stickyQuips WHERE SupplyId = '$supplyId'" or die("Failed to find username");
+                                $result5 = mysqli_query($db_handle, $query5);
+                                if ($result5->num_rows >= 1 ) {
+                                    $obj = $result5->fetch_object();                    
+                                    array_push($array,json_encode($obj));
+                                }
+                                $query6 = "SELECT * FROM $officeSupplies WHERE SupplyId = '$supplyId'" or die("Failed to find username");
+                                $result6 = mysqli_query($db_handle, $query6);
+                                if ($result6->num_rows >= 1 ) {
+                                    $obj = $result6->fetch_object();                    
+                                    array_push($array,json_encode($obj));
+                                }
+                            }
+                        }
+                        }
+                        $oneArray = array_merge($array,$array2);
+                        echo json_encode($array);
                 }
                 // ******************************************** Supplies Section  ******************************************** 
                 elseif($_GET['action'] == 'getSupplies'){

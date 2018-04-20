@@ -26,6 +26,8 @@ def getMessages(username, receiver):
             "time": message['time'].strftime('%m/%d/%Y %H:%M')
         }
         messageList.append(result)
+        if messageList.count == 0:
+            return "No Messages"
     return json.dumps(messageList)
 
 
@@ -83,3 +85,7 @@ def updateCart(supply, username):
 def deleteCart(username):
     carts.delete_one({'username': username})
     return username
+
+def mongoStatus():
+    statusDic = db.command("serverStatus")
+    return str(statusDic)

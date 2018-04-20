@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, make_response, request
+from flask_cors import CORS
 import customer
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/messages")
@@ -42,5 +44,10 @@ def deleteCart():
     return customer.deleteCart(username)
 
 
+@app.route("/mongo/status")
+def mongoStatus():
+    return customer.mongoStatus()
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
