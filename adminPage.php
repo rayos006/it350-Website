@@ -610,7 +610,7 @@ require("nav.php");
             Add Supply:
             </div>
             <div class="content">
-                <select id="subSelect" class="ui search dropdown">
+                <select id="subSelect" class="ui search dropdown supplyDrop">
                             <option value="1">Paper</option>
                             <option value="2">Printers</option>
                             <option value="3">Print Toner</option>

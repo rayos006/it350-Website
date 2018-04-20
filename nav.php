@@ -18,11 +18,12 @@
     <a class="<?=echoActiveClassIfRequestMatches("home")?> item" href="./home.php">Home</a>
     <a class=" <?=echoActiveClassIfRequestMatches("products")?> item"href="./products.php">Products</a>
     <a class="<?=echoActiveClassIfRequestMatches("adminPage")?> item" href="./adminPage.php">Admin</a>
+    <a class="<?=echoActiveClassIfRequestMatches("DBPage")?> item" href="./DBPage.php">DB Admin</a>
     <div class="right menu">
     <?php 
       if (isset($_SESSION['loggedIn'])){
                 echo '<a class="item">Welcome, ' .$_SESSION['username'] .'</a>';
-                echo '<div class="ui dropdown item">My Account<i class="dropdown icon"></i><div class="menu"><a class="' . echoActiveClassIfRequestMatches("orders") .' item">Orders</a><a class="' . echoActiveClassIfRequestMatches("cart") .' item" onclick="openCart()">Cart</a><a class="' . echoActiveClassIfRequestMatches("messages") .' item" onclick="showMessages()">Messages</a></div></div>';
+                echo '<div class="ui dropdown item">My Account<i class="dropdown icon"></i><div class="menu"><a class="' . echoActiveClassIfRequestMatches("orders") .' item" onclick="showOrders()">Orders</a><a class="' . echoActiveClassIfRequestMatches("cart") .' item" onclick="openCart()">Cart</a><a class="' . echoActiveClassIfRequestMatches("messages") .' item" onclick="showMessages()">Messages</a></div></div>';
                 echo '<a class="' . echoActiveClassIfRequestMatches("logoutPage") .' item" href="./admin/logout.php">Logout</a>';
             	}
             	else{
@@ -61,7 +62,7 @@
             </div>
         </div>
 
-        <!-- ********************************************  CART MODAL  ******************************************** -->
+        <!-- ********************************************  CART MODALs  ******************************************** -->
         <div class="ui longer cart modal">
             <div class="header">
                 Cart:
@@ -78,6 +79,34 @@
                 </button>
                 <button id = "PurchaseCartButton" onclick="purchaseCart()" class="ui positive right labeled icon button">
                     Purchase
+                    <i class="checkmark icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="ui special purchaseCart modal">
+            <div class="header">
+                Purchase Info:
+            </div>
+            <div class="content">
+            <h2 id="CompanyIdH2"></h2>
+            <h2 id="AccountIdH2"></h2>
+              <div class="ui selection accountIdSelect dropdown">
+                <input type="hidden" name="gender">
+                <i class="dropdown icon"></i>
+                <div class="default text">Card / Account Number</div>
+                <div id="accountSelections" class="menu">
+
+                </div>
+               </div>
+            </div>
+            <div class="actions">
+                <button class="ui negative right labeled icon button">
+                    Cancel
+                    <i class="trash alternate outline icon"></i>
+                </button>
+                <button id="" onclick="submitCart(this.id)" class="ui positive right labeled icon submitCartButton button">
+                    Submit
                     <i class="checkmark icon"></i>
                 </button>
             </div>
@@ -112,7 +141,7 @@
               <hr>
               <div id="messageInputDIV" class="ui action input hidden">
                 <input style="width:44em;" id="messageText" type="text" placeholder="Type Message Here">
-                <button onclick="sendMessage" class="ui blue right labeled icon button">
+                <button onclick="sendMessage()" class="ui blue right labeled icon button">
                   <i class="paper plane outline icon"></i>
                   Send
                 </button>
@@ -130,6 +159,25 @@
             </div>
         </div>
             
+
+            <!-- ********************************************  ORDER MODAL  ******************************************** -->
+        <div class="ui longer orders modal">
+            <div class="header">
+                Orders:
+            </div>
+            <div class="content">
+              <div id= "orderList" >
+    
+              </div> 
+            </div>
+            <div class="actions">
+                <button class="ui positive right labeled icon button">
+                    Done
+                    <i class="checkmark icon"></i>
+                </button>
+            </div>
+        </div>
+
 </body>
 
 </html>
